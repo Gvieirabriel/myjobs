@@ -38,7 +38,7 @@ public class ConsolidarAtividade extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("funcionarioMYJOBS") == null) {
+        if (session.getAttribute("funcionarioatoa") == null) {
             request.setAttribute("msg", "Acesso negado!");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/erro.jsp");
             rd.forward(request, response);
@@ -57,7 +57,7 @@ public class ConsolidarAtividade extends HttpServlet {
         else {
             AtividadeDAO atividadeDAO = new AtividadeDAO();
             Funcionario funcionario = new Funcionario();
-            funcionario = (Funcionario)session.getAttribute("funcionarioMYJOBS");
+            funcionario = (Funcionario)session.getAttribute("funcionarioatoa");
             atividadeDAO.alterarEstadoTodos(funcionario);
             request.setAttribute("msg", "Atividades consolidadas!");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/ManterAtividades");

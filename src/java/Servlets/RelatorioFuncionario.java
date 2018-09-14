@@ -47,7 +47,7 @@ public class RelatorioFuncionario extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("funcionarioMYJOBS") == null) {
+        if (session.getAttribute("funcionarioatoa") == null) {
             request.setAttribute("msg", "Acesso negado!");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/erro.jsp");
             rd.forward(request, response);
@@ -61,7 +61,7 @@ public class RelatorioFuncionario extends HttpServlet {
                 URL jasperURL = new URL(host + jasper);
                 HashMap params = new HashMap();
                 Funcionario funcionario = new Funcionario();
-                funcionario = (Funcionario)session.getAttribute("funcionarioMYJOBS");
+                funcionario = (Funcionario)session.getAttribute("funcionarioatoa");
                 int idFun =  Integer.valueOf(request.getParameter("funcionario"));
                 String idD = String.valueOf(idFun);
                 Client client = ClientBuilder.newClient();

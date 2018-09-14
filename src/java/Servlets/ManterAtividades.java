@@ -46,7 +46,7 @@ public class ManterAtividades extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("funcionarioMYJOBS") == null) {
+        if (session.getAttribute("funcionarioatoa") == null) {
             request.setAttribute("msg", "Acesso negado!");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/erro.jsp");
             rd.forward(request, response);
@@ -56,7 +56,7 @@ public class ManterAtividades extends HttpServlet {
         List<Atividade> lista = new ArrayList<>();
         List<Funcionario> listaFuncionario = new ArrayList<>();
         Funcionario funcionario = new Funcionario();
-        funcionario = (Funcionario)session.getAttribute("funcionarioMYJOBS");
+        funcionario = (Funcionario)session.getAttribute("funcionarioatoa");
         lista = atividadeDAO.buscaAtividadePorDepartamento(funcionario);
         Response resp = client.target("http://localhost:8080/RHACTS/webresources/funcionarios").request(MediaType.APPLICATION_JSON).get();
         listaFuncionario = resp.readEntity(new GenericType<List<Funcionario>>() {});

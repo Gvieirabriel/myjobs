@@ -41,35 +41,7 @@ public class ProcessaLogin extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    /*protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, NoSuchAlgorithmException, SQLException, ClassNotFoundException {
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-        String senhac = senha;
-        Client client = ClientBuilder.newClient();
-        LoginDAO loginDAO = new LoginDAO();
-        Funcionario funcionario = new Funcionario();
-        funcionario = loginDAO.lerFuncionario(email, senhac);
-        if (funcionario.getEmail() == null) {
-            request.setAttribute("msg", "Email e/ou senha incorreto(s)!");
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
-            rd.forward(request, response);
-        }
-        else {
-            HttpSession session = request.getSession();
-            session.setAttribute("funcionarioMYJOBS", funcionario);
-            session.setMaxInactiveInterval(20*60);
-            RequestDispatcher rd = null;
-            if (funcionario.getCargo().getNomeCargo().equals("Gerente")) {
-                AtividadeDAO a = new AtividadeDAO();
-                rd = getServletContext().getRequestDispatcher("/manter_tipos_atividades.jsp");
-            }
-            else
-                rd = getServletContext().getRequestDispatcher("/Atividades");
-            rd.include(request, response);
-        }        
-    }*/
+  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, NoSuchAlgorithmException, SQLException, ClassNotFoundException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -94,10 +66,10 @@ public class ProcessaLogin extends HttpServlet {
                     request.setAttribute("msg", "Existem atividades em andamento que impediram o fechamento da folha de alguns funcionários deste departamento!");
                     a.deletaAviso(funcionario.getDepartamento().getIdDepartamento());
                 }
-                rd = getServletContext().getRequestDispatcher("/manter_tipos_atividades.jsp");
+                rd = getServletContext().getRequestDispatcher("/ManterAtividades");
             }
             else
-                rd = getServletContext().getRequestDispatcher("/Atividades");
+                rd = getServletContext().getRequestDispatcher("/atividades.jsp");
             rd.include(request, response);
         }        
     }

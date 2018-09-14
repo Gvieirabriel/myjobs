@@ -47,7 +47,7 @@ public class RelatorioDepartamento extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("funcionarioMYJOBS") == null) {
+        if (session.getAttribute("funcionarioatoa") == null) {
             request.setAttribute("msg", "Acesso negado!");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/erro.jsp");
             rd.forward(request, response);
@@ -62,7 +62,7 @@ public class RelatorioDepartamento extends HttpServlet {
                 HashMap params = new HashMap();
                 Date data = Date.valueOf(request.getParameter("data"));
                 Funcionario funcionario = new Funcionario();
-                funcionario = (Funcionario)session.getAttribute("funcionarioMYJOBS");
+                funcionario = (Funcionario)session.getAttribute("funcionarioatoa");
                 int idDep =  funcionario.getDepartamento().getIdDepartamento();
                 String idD = String.valueOf(idDep);
                 Departamento departamento = new Departamento();

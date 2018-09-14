@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<c:if test="${sessionScope.funcionarioMYJOBS.cargo.nomeCargo == 'Gerente' || empty sessionScope.funcionarioMYJOBS.cargo.nomeCargo}">
+<c:if test="${sessionScope.funcionarioatoa.cargo.nomeCargo == 'Gerente' || empty sessionScope.funcionarioatoa.cargo.nomeCargo}">
     <c:redirect url="/erro.jsp">
         <c:param name="msg" value="Acesso negado!"/>
     </c:redirect>
@@ -39,7 +39,7 @@
                   <ul class="nav navbar-nav navbar-right">
                     <li>
                         <div style="margin-top: 2vh; color: #ccc;">
-                            Bem vindo, <c:out value="${sessionScope.funcionarioMYJOBS.nomeFuncionario}"/><span style="float:right;"></span>
+                            Bem vindo, <c:out value="${sessionScope.funcionarioatoa.nomeFuncionario}"/><span style="float:right;"></span>
                         </div>
                     </li>
                     <li><a href="/MYJOBS/ProcessaLogout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>

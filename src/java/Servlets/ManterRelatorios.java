@@ -41,7 +41,7 @@ public class ManterRelatorios extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("funcionarioMYJOBS") == null) {
+        if (session.getAttribute("funcionarioatoa") == null) {
             request.setAttribute("msg", "Acesso negado!");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/erro.jsp");
             rd.forward(request, response);
@@ -49,7 +49,7 @@ public class ManterRelatorios extends HttpServlet {
         Client client = ClientBuilder.newClient();
         List<Funcionario> listaFuncionario = new ArrayList<>();
         Funcionario funcionario = new Funcionario();
-        funcionario = (Funcionario)session.getAttribute("funcionarioMYJOBS");
+        funcionario = (Funcionario)session.getAttribute("funcionarioatoa");
             Response resp = client.target("http://localhost:8080/RHACTS/webresources/funcionarios/departamento/" + funcionario.getDepartamento().getIdDepartamento()).request(MediaType.APPLICATION_JSON).get();
         listaFuncionario = resp.readEntity(new GenericType<List<Funcionario>>() {});
         request.setAttribute("listaFuncionario", listaFuncionario);

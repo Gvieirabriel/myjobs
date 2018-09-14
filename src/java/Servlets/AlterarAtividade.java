@@ -44,7 +44,7 @@ public class AlterarAtividade extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("funcionarioMYJOBS") == null) {
+        if (session.getAttribute("funcionarioatoa") == null) {
             request.setAttribute("msg", "Acesso negado!");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/erro.jsp");
             rd.forward(request, response);
@@ -56,7 +56,7 @@ public class AlterarAtividade extends HttpServlet {
             AtividadeDAO atividadeDAO = new AtividadeDAO();
             Funcionario funcionario = new Funcionario();
             Atividade atividade = new Atividade();
-            funcionario = (Funcionario)session.getAttribute("funcionarioMYJOBS");
+            funcionario = (Funcionario)session.getAttribute("funcionarioatoa");
             int id = Integer.valueOf(request.getParameter("atv"));
             atividade = atividadeDAO.buscaAtividadePorFuncionarioEId(funcionario, id);
             request.setAttribute("lista", listaTipoAtividade);
@@ -69,7 +69,7 @@ public class AlterarAtividade extends HttpServlet {
             Atividade atividade = new Atividade();
             TipoAtividade tipoAtividade = new TipoAtividade();
             Funcionario funcionario = new Funcionario();
-            funcionario = (Funcionario)session.getAttribute("funcionarioMYJOBS");
+            funcionario = (Funcionario)session.getAttribute("funcionarioatoa");
             atividade.setIdAtividade(Integer.valueOf(request.getParameter("check")));
             atividade.setDescricao(request.getParameter("Descricao"));
             atividade.setInicio(Date.valueOf(request.getParameter("Inicio")));

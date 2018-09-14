@@ -42,7 +42,7 @@ public class Atividades extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("funcionarioMYJOBS") == null) {
+        if (session.getAttribute("funcionarioatoa") == null) {
             request.setAttribute("msg", "Acesso negado!");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/erro.jsp");
             rd.forward(request, response);
@@ -50,7 +50,7 @@ public class Atividades extends HttpServlet {
         AtividadeDAO atividadeDAO = new AtividadeDAO();
         List<Atividade> lista = new ArrayList<>();
         Funcionario funcionario = new Funcionario();
-        funcionario = (Funcionario)session.getAttribute("funcionarioMYJOBS");
+        funcionario = (Funcionario)session.getAttribute("funcionarioatoa");
         lista = atividadeDAO.buscaAtividadePorFuncionario(funcionario);
         request.setAttribute("lista", lista);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/atividades.jsp");
