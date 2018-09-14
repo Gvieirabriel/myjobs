@@ -50,7 +50,7 @@ public class ManterRelatorios extends HttpServlet {
         List<Funcionario> listaFuncionario = new ArrayList<>();
         Funcionario funcionario = new Funcionario();
         funcionario = (Funcionario)session.getAttribute("funcionarioMYJOBS");
-        Response resp = client.target("http://localhost:8080/RHACTS/webresources/funcionarios/departamento/" + funcionario.getDepartamento().getIdDepartamento()).request(MediaType.APPLICATION_JSON).get();
+            Response resp = client.target("http://localhost:8080/RHACTS/webresources/funcionarios/departamento/" + funcionario.getDepartamento().getIdDepartamento()).request(MediaType.APPLICATION_JSON).get();
         listaFuncionario = resp.readEntity(new GenericType<List<Funcionario>>() {});
         request.setAttribute("listaFuncionario", listaFuncionario);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/relatorios_gerente.jsp");

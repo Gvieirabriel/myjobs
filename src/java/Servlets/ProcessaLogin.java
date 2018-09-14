@@ -7,7 +7,6 @@ package Servlets;
 
 import Beans.Funcionario;
 import DAO.AtividadeDAO;
-import DAO.LoginDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
@@ -42,17 +41,11 @@ public class ProcessaLogin extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+    /*protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, NoSuchAlgorithmException, SQLException, ClassNotFoundException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
-        /*MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
-        byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : messageDigest) {
-            hexString.append(String.format("%02X", 0xFF & b));
-        }*/
         String senhac = senha;
         Client client = ClientBuilder.newClient();
         LoginDAO loginDAO = new LoginDAO();
@@ -70,6 +63,37 @@ public class ProcessaLogin extends HttpServlet {
             RequestDispatcher rd = null;
             if (funcionario.getCargo().getNomeCargo().equals("Gerente")) {
                 AtividadeDAO a = new AtividadeDAO();
+                rd = getServletContext().getRequestDispatcher("/manter_tipos_atividades.jsp");
+            }
+            else
+                rd = getServletContext().getRequestDispatcher("/Atividades");
+            rd.include(request, response);
+        }        
+    }*/
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        String senhac = senha;
+        Client client = ClientBuilder.newClient();
+        Funcionario funcionario = client.target("http://localhost:8080/RHACTS/webresources/funcionarios/login/{email}/{senha}").resolveTemplate("email", email).resolveTemplate("senha", senhac).request(MediaType.APPLICATION_JSON).get(Funcionario.class);
+        if (funcionario.getEmail() == null) {
+            request.setAttribute("msg", "Email e/ou senha incorreto(s)!");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+        }
+        else {
+            HttpSession session = request.getSession();
+            session.setAttribute("funcionarioatoa", funcionario);
+            session.setMaxInactiveInterval(20*60);
+            RequestDispatcher rd = null;
+            if (funcionario.getCargo().getNomeCargo().equals("Gerente")) {
+                AtividadeDAO a = new AtividadeDAO();
+                if(a.aviso(funcionario.getDepartamento().getIdDepartamento())){
+                    request.setAttribute("msg", "Existem atividades em andamento que impediram o fechamento da folha de alguns funcionários deste departamento!");
+                    a.deletaAviso(funcionario.getDepartamento().getIdDepartamento());
+                }
                 rd = getServletContext().getRequestDispatcher("/manter_tipos_atividades.jsp");
             }
             else

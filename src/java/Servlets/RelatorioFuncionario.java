@@ -55,7 +55,7 @@ public class RelatorioFuncionario extends HttpServlet {
         Connection con = null;
             try {
                 DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-                con = DriverManager.getConnection("jdbc:mysql://localhost/MYJOBS", "root", "1q2w3e4r5");
+                con = DriverManager.getConnection("jdbc:mysql://localhost/MYJOBS", "root", "root");
                 String jasper = request.getContextPath() + "/Atividade_doFuncionario.jasper";
                 String host = "http://" + request.getServerName() + ":" + request.getServerPort();
                 URL jasperURL = new URL(host + jasper);
