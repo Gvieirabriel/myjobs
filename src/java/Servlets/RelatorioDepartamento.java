@@ -16,6 +16,8 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +29,13 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 /**
  *
@@ -55,10 +63,9 @@ public class RelatorioDepartamento extends HttpServlet {
         Connection con = null;
             try {
                 DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-                con = DriverManager.getConnection("jdbc:mysql://localhost/MYJOBS", "root", "root");
-                String jasper = request.getContextPath() + "/Consolidado_porDepartamento.jasper";
-                String host = "http://" + request.getServerName() + ":" + request.getServerPort();
-                URL jasperURL = new URL(host + jasper);
+                Class.forName("com.mysql.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/myjobs?autoReconnect=true&useSSL=false", "root", "root");
+                String jrxml = "/home/gqueiroz/NetBeansProjects/MYJOBS/build/web/Consolidado_porDepartamento.jrxml";
                 HashMap params = new HashMap();
                 Date data = Date.valueOf(request.getParameter("data"));
                 Funcionario funcionario = new Funcionario();
@@ -67,17 +74,18 @@ public class RelatorioDepartamento extends HttpServlet {
                 String idD = String.valueOf(idDep);
                 Departamento departamento = new Departamento();
                 Client client = ClientBuilder.newClient();
-                departamento = client.target("http://localhost:8080/RHINDO/webresources/funcionarios/departamento/nome/" + idD).request(MediaType.APPLICATION_JSON).get(Departamento.class);
+                departamento = client.target("http://localhost:8080/RHACTS/webresources/funcionarios/departamento/nome/" + idD).request(MediaType.APPLICATION_JSON).get(Departamento.class);
                 params.put("a.inicio", data);
                 params.put("a.fim", data);
                 params.put("a.idDepartamento", idDep);
                 params.put("nomeDepartamento", departamento.getNomeDepartamento());
-                byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
-                if (bytes != null) {
-                    response.setContentType("application/pdf");
-                    OutputStream ops = response.getOutputStream();
-                    ops.write(bytes);
-                }
+                String jasper = JasperCompileManager.compileReportToFile(jrxml);
+                JasperPrint print = JasperFillManager.fillReport(jasper, params, con);
+                OutputStream saida = response.getOutputStream();
+                JRExporter exporter = new JRPdfExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+                exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, saida);
+                exporter.exportReport();
             }
             catch(SQLException e) {
                 request.setAttribute("msg", "Erro de conexão ou query: " + e.getMessage());
@@ -86,7 +94,9 @@ public class RelatorioDepartamento extends HttpServlet {
             catch(JRException e) {
                 request.setAttribute("msg", "Erro no Jasper : " + e.getMessage());
                 request.getRequestDispatcher("erro.jsp").forward(request, response);
-            }
+            } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RelatorioDepartamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
             finally {
                 if (con!=null)
                 try { con.close(); } catch(Exception e) {}
