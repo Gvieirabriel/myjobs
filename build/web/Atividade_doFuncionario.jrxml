@@ -14,12 +14,15 @@
 	</style>
 	<parameter name="nomeFuncionario" class="java.lang.String"/>
 	<parameter name="a.idFuncionario" class="java.lang.Integer"/>
+	<parameter name="CurrentDate" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select a.idAtividade, t.nomeTipo, a.descricao, a.inicio, a.fim, e.nome
-from Atividade a
-inner join Estado e on e.idEstado = a.idEstado
-inner join TipoAtividade t on a.idTipoAtividade = t.idTipoAtividade
-where a.idFuncionario =  $P{a.idFuncionario}]]>
+		from Atividade a
+		inner join Estado e on e.idEstado = a.idEstado
+		inner join TipoAtividade t on a.idTipoAtividade = t.idTipoAtividade
+		where a.idFuncionario =  $P{a.idFuncionario}]]>
 	</queryString>
 	<field name="idAtividade" class="java.lang.Long"/>
 	<field name="nomeTipo" class="java.lang.String"/>
@@ -60,7 +63,7 @@ where a.idFuncionario =  $P{a.idFuncionario}]]>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="640" y="10" width="144" height="20" forecolor="#FFFFFF"/>
 					<textElement/>
-					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+					<textFieldExpression class="java.util.Date"><![CDATA[$P{CurrentDate}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -134,32 +137,32 @@ where a.idFuncionario =  $P{a.idFuncionario}]]>
 			<textField>
 				<reportElement x="0" y="0" width="60" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{idAtividade}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Long" ><![CDATA[$F{idAtividade}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="60" y="0" width="150" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{nomeTipo}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String" ><![CDATA[$F{nomeTipo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="210" y="0" width="290" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String" ><![CDATA[$F{descricao}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="500" y="0" width="120" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{inicio}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date" ><![CDATA[$F{inicio}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="620" y="0" width="90" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{fim}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date" ><![CDATA[$F{fim}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="710" y="0" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String" ><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
