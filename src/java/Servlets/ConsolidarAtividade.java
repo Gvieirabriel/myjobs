@@ -47,7 +47,7 @@ public class ConsolidarAtividade extends HttpServlet {
             int id = Integer.valueOf(request.getParameter("atv"));
             AtividadeDAO atividadeDAO = new AtividadeDAO();
             if (request.getParameter("est").equals("1"))
-                atividadeDAO.alterarEstado(5, id);
+                atividadeDAO.alterarEstado(2, id);
             else
                 atividadeDAO.alterarEstado(3, id);
             request.setAttribute("msg", "Atividade consolidada!");

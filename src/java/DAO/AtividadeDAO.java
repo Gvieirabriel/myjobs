@@ -29,8 +29,8 @@ public class AtividadeDAO {
     PreparedStatement stmt3 = null;
     ResultSet rs = null;
     private String cadastrarAtividade = "insert into Atividade (idTipoAtividade, idFuncionario, idDepartamento, inicio, fim, descricao) values (?, ?, ?, curdate(), null, ?)";
-    private String finalizarAtividade = "update Atividade set fim = curdate(), idEstado = 2 where idAtividade = ?";
-    private String buscarAtividadeIdEstado = "select idAtividade from Atividade where idFuncionario = ? and idEstado in (1, 5)";
+    private String finalizarAtividade = "update Atividade set fim = curdate(), idEstado = 3 where idAtividade = ?";
+    private String buscarAtividadeIdEstado = "select idAtividade from Atividade where idFuncionario = ? and idEstado in (1, 3)";
     private String buscaAtividadePorFuncionario = "select a.idAtividade, e.idEstado, e.nome, t.idTipoAtividade, t.nomeTipo, a.inicio, a.fim, a.descricao from Atividade a inner join Estado e on a.idEstado = e.idEstado inner join TipoAtividade t on a.idTipoAtividade = t.idTipoAtividade where a.idFuncionario = ? order by a.idAtividade";
     private String buscaAtividadePorFuncionarioEId ="select a.idAtividade, e.idEstado, e.nome, t.idTipoAtividade, t.nomeTipo, a.inicio, a.fim, a.descricao from Atividade a inner join Estado e on a.idEstado = e.idEstado inner join TipoAtividade t on a.idTipoAtividade = t.idTipoAtividade where a.idFuncionario = ? and a.idAtividade = ? order by a.idAtividade";
     private String alterarAtividade = "update Atividade set idEstado = ?, idTipoAtividade = ?, inicio = ?, fim = ?, descricao = ? where idAtividade = ?"; 
@@ -110,7 +110,7 @@ public class AtividadeDAO {
         try {
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(finalizarAtividade);
-            stmt.setInt(1, atividade.getIdAtividade());
+            stmt.setInt(1, 3);
             stmt.executeUpdate();
         } catch (SQLException ex) {
             out.println("Erro ao cadastrar Atividade: " + ex.getMessage());

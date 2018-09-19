@@ -31,8 +31,8 @@ and a.idDepartamento =  $P{a.idDepartamento}]]>
 	<field name="idAtividade" class="java.lang.Long"/>
 	<field name="nomeTipo" class="java.lang.String"/>
 	<field name="descricao" class="java.lang.String"/>
-	<field name="inicio" class="java.sql.Date"/>
-	<field name="fim" class="java.sql.Date"/>
+	<field name="inicio" class="java.util.Date"/>
+	<field name="fim" class="java.util.Date"/>
 	<field name="nome" class="java.lang.String"/>
 	<group name="Group1">
 		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
@@ -143,7 +143,7 @@ and a.idDepartamento =  $P{a.idDepartamento}]]>
 				<textField>
 					<reportElement x="110" y="0" width="150" height="20"/>
 					<textElement/>
-					<textFieldExpression><![CDATA[$P{a.inicio}]]></textFieldExpression>
+					<textFieldExpression class="java.util.Date" ><![CDATA[$P{a.inicio}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

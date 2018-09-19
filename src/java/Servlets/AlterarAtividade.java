@@ -75,7 +75,7 @@ public class AlterarAtividade extends HttpServlet {
             atividade.setInicio(Date.valueOf(request.getParameter("Inicio")));
             atividade.setIdEstado(Integer.valueOf(request.getParameter("Status")));
             tipoAtividade.setIdTipoAtividade(Integer.valueOf(request.getParameter("Tipo")));
-            if (atividade.getIdEstado() == 2) {
+            if (atividade.getIdEstado() == 3) {
                 atividade.setFim(Date.valueOf(request.getParameter("Fim")));
             }
             atividade.setTipoAtividade(tipoAtividade);

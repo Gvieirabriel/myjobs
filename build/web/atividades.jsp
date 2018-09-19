@@ -89,7 +89,7 @@
                                         <c:when test="${item.idEstado == 1}">
                                             <a href="FinalizarAtividade?atv=<c:out value="${item.idAtividade}"/>"><span class="glyphicon glyphicon-ok" name="Remover" value="Remover" onmouseover="this.style.color='#009900'" onmouseout="this.style.color='#00ff00'" style="color: red; font-size: 1.5vw;"></span></a>
                                         </c:when>
-                                        <c:when test="${item.idEstado == 5}">
+                                        <c:when test="${item.idEstado == 2}">
                                             <a href="FinalizarAtividade?atv=<c:out value="${item.idAtividade}"/>&est=<c:out value="${item.idEstado}"/>"><span class="glyphicon glyphicon-ok" name="Remover" value="Remover" onmouseover="this.style.color='#009900'" onmouseout="this.style.color='#00ff00'" style="color: red; font-size: 1.5vw;"></span></a>
                                         </c:when>
                                         <c:otherwise>

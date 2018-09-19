@@ -69,7 +69,7 @@ public class ProcessaLogin extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/ManterAtividades");
             }
             else
-                rd = getServletContext().getRequestDispatcher("/atividades.jsp");
+                rd = getServletContext().getRequestDispatcher("/Atividades");
             rd.include(request, response);
         }        
     }

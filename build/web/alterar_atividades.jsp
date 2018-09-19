@@ -69,7 +69,7 @@
                     <br/>
                     <label>Descrição:</label> <input type="text" class="form-control" name="Descricao" value="${atividade.descricao}">
                     <br/>
-                    <label>Status:</label> <br/><input type="radio" name="Status" value="1" checked="true" onclick="disable()"> Em andamento <input type="radio" name="Status" value="2" onclick="undisable()"> Finalizada<br/>
+                    <label>Status:</label> <br/><input type="radio" name="Status" value="2" checked="true" onclick="disable()"> Em andamento <input type="radio" name="Status" value="3" onclick="undisable()"> Finalizada<br/>
                     <br/>
                     <label>Início:</label> <input type="date" class="form-control" name="Inicio">
                     <br/>
